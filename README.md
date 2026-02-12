@@ -11,9 +11,7 @@
 
 ## 🤗 Dataset
 
-<h4 align="center"><a href="https://huggingface.co/datasets/ymwangv/MC-Mind2Web" style="color: #FF0000;">https://huggingface.co/datasets/ymwangv/MC-Mind2Web</a></h4>
-
-
+<h3 align="center"><a href="https://huggingface.co/datasets/ymwangv/MC-Mind2Web">https://huggingface.co/datasets/ymwangv/MC-Mind2Web</a></h3>
 ---
 
 ## 📋 Overview
