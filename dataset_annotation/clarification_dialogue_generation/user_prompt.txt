@@ -1,0 +1,113 @@
+Original Task: {TASK_INSTRUCTION}
+
+Vague Task: {VAGUE_TASK}
+
+Current Action: {CURRENT_ACTION}
+
+Value Modification: {VALUE_MODIFICATION}
+
+The screenshot shows the current webpage. The target element is highlighted with a red bounding box.
+
+The value modification information will be given in JSON format, including "original_value", "modified_value", and "modification_method" fields (if the "modification_method" is "unfeasible", "available_options" will also be provided).
+
+Please follow these steps to generate the clarification dialogue:
+
+STEP 1: Analyze Value Modification
+Understand the value that was modified:
+- What changed between the original and vague tasks
+- How this modification affects the current action
+- Which modification type was applied (omission/generalization/unfeasible)
+
+STEP 2: Analyze Screenshot
+Understand what is visible on the webpage:
+- What type of webpage is shown
+- Where the target element is located and what it is
+- How the screenshot relates to the task and current action
+- For unfeasible modifications, what actual options are available
+
+STEP 3: Determine Clarification Approach
+Based on the modification method, decide how to ask for clarification:
+- For omission: Ask for the missing value that was omitted
+- For generalization: Ask for specific details to replace the vague value
+- For unfeasible: Ask which available option to choose to replace the unfeasible value
+
+STEP 4: Generate Clarifying Question
+Generate a natural clarifying question that references the screenshot:
+- Always mention the target element that needs interaction
+- Ask for information based on the modification method and clarification approach
+- For unfeasible modification, include the available options you are provided and you can see
+- Keep the question natural and concise, like a real web agent would ask
+
+STEP 5: Generate User Response
+Provide a natural response that guides the agent:
+- Include the original value naturally in the response
+- Keep the response natural and concise, like a real user would respond
+
+
+Please provide your answer in the following JSON format:
+{
+    "question": "Agent's natural clarifying question referencing the screenshot",
+    "answer": "User's natural response providing the original value",
+    "reasoning": "Brief explanation of why clarification is needed and how you formulated the clarifying question and user response"
+}
+
+
+EXAMPLES:
+
+---
+Example 1 - Unfeasible:
+Original Task: Search for red Nike running shoes in size 10 and add to cart
+Vague Task: Search for purple running shoes in medium size and add to cart
+Current Action: [button] Red -> CLICK
+Value Modification:
+{
+    "original_value": "red",
+    "modified_value": "purple",
+    "modification_method": "unfeasible",
+    "available_options": ["black", "blue", "white", "gray", "red"]
+}
+
+Output:
+{
+    "question": "I'm looking at the color filter options. I can see black, blue, white, gray, and red buttons available, but there's no purple option. Which color should I click?",
+    "answer": "Please click on red - I'm looking for red running shoes.",
+    "reasoning": "The color 'purple' doesn't exist in the available options. The agent needs to know which color button to click from the filter."
+}
+
+---
+Example 2 - Omission:
+Original Task: Search for red Nike running shoes in size 10 and add to cart
+Vague Task: Search for purple running shoes in medium size and add to cart
+Current Action: [input] Brand -> TYPE: Nike
+Value Modification:
+{
+    "original_value": "Nike",
+    "modified_value": "",
+    "modification_method": "omission"
+}
+
+Output:
+{
+    "question": "I see a brand search field highlighted on the page. You mentioned running shoes but didn't specify a brand. Which brand should I search for?",
+    "answer": "I'm looking for Nike running shoes.",
+    "reasoning": "The brand 'Nike' was omitted from the vague task. The agent needs to know what to type in the brand field."
+}
+
+---
+Example 3 - Generalization:
+Original Task: Search for red Nike running shoes in size 10 and add to cart
+Vague Task: Search for purple running shoes in medium size and add to cart
+Current Action: [select] Size -> SELECT: 10
+Value Modification:
+{
+    "original_value": "size 10",
+    "modified_value": "medium size",
+    "modification_method": "generalization"
+}
+
+Output:
+{
+    "question": "I need to select a shoe size from the dropdown. You mentioned 'medium size' - what specific size number should I select?",
+    "answer": "I need size 10.",
+    "reasoning": "The vague term 'medium size' needs clarification. The agent needs a specific size number to select from the size dropdown."
+}

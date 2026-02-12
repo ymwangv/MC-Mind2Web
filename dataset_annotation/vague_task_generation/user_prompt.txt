@@ -1,0 +1,83 @@
+Original Task: {TASK_INSTRUCTION}
+
+Values to be Modified:
+{VALUE_MODIFICATIONS}
+
+Values to be modified will be given in JSON format, where each item consists of "value" and "method" fields (if the "method" is "unfeasible", "available_options" will also be provided).
+
+Please follow these steps to transform the original task instruction:
+
+STEP 1: Value Modification Methods
+Understand the three modification methods:
+- Omission: Remove the specific value entirely from the instruction
+- Generalization: Replace the specific value with a more general version that retains some information but removes specific details
+- Unfeasible: Replace the specific value with a plausible but non-existent option of the same type which cannot be found in the available options
+
+STEP 2: Apply Modifications
+Apply the corresponding modification method to each value one by one, then integrate all modifications to generate the complete vague task instruction.
+
+STEP 3: Ensure Natural Output
+- Preserve the overall task structure and intent while making modifications to the specific values
+- The vague instruction should be grammatically correct and sound like a natural user request
+- The result should require clarification during execution but still be a realistic user request
+
+Please provide your answer in the following JSON format:
+{
+    "vague_task": "the transformed vague instruction",
+    "transformations": [
+        {
+            "original_value": "value to be modified given in input",
+            "method": "modification method given in input",
+            "available_options": "available options given in input (if method is unfeasible, otherwise empty list)",
+            "transformed_value": "what it became after modification (empty string for omission method)"
+        }
+    ]
+}
+
+---
+Example:
+
+Original Task: Search for red Nike running shoes in size 10 and add to cart
+
+Values to be Modified:
+[
+    {
+        "value": "red",
+        "method": "unfeasible",
+        "available_options": ["black", "blue", "white", "gray", "red"]
+    },
+    {
+        "value": "Nike",
+        "method": "omission"
+    },
+    {
+        "value": "size 10",
+        "method": "generalization"
+    }
+]
+
+Output:
+{
+    "vague_task": "Search for purple running shoes in medium size and add to cart",
+    "transformations": [
+        {
+            "original_value": "red",
+            "method": "unfeasible",
+            "available_options": ["black", "blue", "white", "gray", "red"],
+            "transformed_value": "purple"
+        },
+        {
+            "original_value": "Nike",
+            "method": "omission",
+            "available_options": [],
+            "transformed_value": ""
+        },
+        {
+            "original_value": "size 10",
+            "method": "generalization",
+            "available_options": [],
+            "transformed_value": "medium size"
+        }
+    ]
+}
+---

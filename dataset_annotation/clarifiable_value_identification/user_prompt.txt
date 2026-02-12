@@ -1,0 +1,59 @@
+Task Instruction: {TASK_INSTRUCTION}
+
+Current Action: {CURRENT_ACTION}
+
+The screenshot shows the webpage when the agent predicted this action. The target element is highlighted with a red bounding box. The operation is {OPERATION_VALUE}.
+
+Please follow these steps to analyze this action:
+
+STEP 1: Context Understanding
+Analyze the task, action, and webpage to establish a comprehensive understanding of the current situation:
+- Task Analysis: Understand the overall goal and what specific outcome the user wants to achieve
+- Action Analysis: Understand what this action accomplishes and how it contributes to task completion
+- Screenshot Analysis: Carefully examine the webpage screenshot to identify what type of page this is, what information and interactive elements are present, and the current page state
+- Connection Analysis: Understand how the current webpage state and content relate to the task goal, and whether the current action aligns with what's available on the page
+
+STEP 2: Action Type Identification
+Classify whether the action is navigational or informational:
+- Navigational: Actions whose primary purpose is to navigate between website sections or pages
+- Informational: Actions that provide, select, or process task-specific information beyond pure navigation
+Ask yourself: Is this action about finding where to perform the task (navigational) or working with specific task information (informational)?
+
+STEP 3: Value Dependency Analysis
+Based on the operation type, determine whether the action depends on a specific value from the task instruction:
+- TYPE or SELECT: Always value-dependent and never selective
+- CLICK: Check if the clicked element corresponds to a value from the task instruction. Would removing specific values from the task make this action impossible to predict? If yes, then the CLICK is value-dependent; otherwise, it is not value-dependent.
+
+STEP 4: Extract Dependent Value (only for value-dependent actions)
+Extract the specific value from the task instruction that this action requires:
+- This should be the exact value mentioned in the task that guides this action
+- Do not infer or create values not explicitly stated in the task
+
+STEP 5: Selective Action Analysis (only for value-dependent CLICK actions)
+Determine whether this is a selective CLICK action:
+- Are there multiple clickable options CURRENTLY VISIBLE on the webpage screenshot?
+- Does the agent need to choose one option from these visible alternatives based on the task value?
+
+STEP 6: Extract Available Options (only for selective CLICK actions)
+Extract all available options:
+- List ONLY the options that are ACTUALLY VISIBLE in the webpage screenshot
+- Do not add hypothetical options or predict what might appear later
+- Do not guess or infer options beyond what you can see
+
+IMPORTANT REMINDERS:
+- TYPE operations: Always value-dependent, never selective
+- SELECT operations: Always value-dependent, never selective  
+- CLICK operations: Can be value-dependent or not; only value-dependent CLICK can be selective
+- A CLICK is selective ONLY when there are multiple visible options to choose from based on dependent value
+- Only list options you can SEE in the screenshot, never predict or imagine options
+- Action type is independent from value dependency - both types can be value-dependent
+
+Please only provide your answer in the following JSON format:
+{
+  "action_type": "navigational" or "informational",
+  "is_value_dependent": true or false,
+  "dependent_value": "the specific value from task" (null if not value-dependent),
+  "is_selective": true or false (null if not value-dependent),
+  "available_options": ["list of visible options only"] (null if not selective),
+  "reasoning": "step-by-step explanation following the analysis steps above"
+}
