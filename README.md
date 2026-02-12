@@ -9,7 +9,9 @@
 
 ---
 
-<h2 align="center">🤗 Dataset: <a href="https://huggingface.co/datasets/ymwangv/MC-Mind2Web">MC-Mind2Web (https://huggingface.co/datasets/ymwangv/MC-Mind2Web)</a></h2>
+<h2 align="center">🤗 Dataset: <a href="https://huggingface.co/datasets/ymwangv/MC-Mind2Web">MC-Mind2Web</a></h2>
+<h2 align="center"><a href="https://huggingface.co/datasets/ymwangv/MC-Mind2Web">(https://huggingface.co/datasets/ymwangv/MC-Mind2Web)</a></h2>
+
 
 
 ---
