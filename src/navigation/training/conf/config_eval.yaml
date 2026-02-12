@@ -1,0 +1,32 @@
+defaults:
+  - _self_
+  - model: flan-t5-base
+
+task_mode: full
+model_mode: "multichoice"
+
+top_k: 50
+model_path: ???
+
+
+train:
+  neg_ratio: 0.2
+  num_candidates: 5
+  max_context_len: 512
+  per_device_eval_batch_size: 32
+  qlora: False
+
+data:
+  base_path: data
+  test_splits:
+    - test_task
+    - test_website
+    - test_domain
+  score_file: eval/candidate/${task_mode}/scores_all.pkl
+
+hydra:
+  run:
+    dir: eval/navigation/${task_mode}-${model_mode}/${model.name}
+  job:
+    chdir: False
+  verbose: INFO

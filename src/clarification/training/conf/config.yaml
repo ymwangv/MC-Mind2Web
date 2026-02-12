@@ -1,0 +1,40 @@
+defaults:
+  - _self_
+  - model: llava-1.6-mistral-7b
+
+data_path: "data"
+split: "train"
+
+mode: "proact"
+env: "screenshot"
+
+use_4bit: true
+use_lora: true
+lora_config: "lora64"
+
+lora32:
+  lora_r: 32
+  lora_alpha: 64
+  lora_dropout: 0.05
+
+lora64:
+  lora_r: 64
+  lora_alpha: 128
+  lora_dropout: 0.05
+
+train:
+  num_epochs: 3
+  per_device_train_batch_size: 4
+  gradient_accumulation_steps: 1
+  optim: "adamw_torch"
+  learning_rate: 2e-4
+  warmup_ratio: 0.03
+  lr_scheduler_type: "cosine"
+
+
+hydra:
+  run:
+    dir: logs/clarification/${mode}_${env}/${model.name}/${now:%Y-%m-%d_%H-%M-%S}
+  job:
+    chdir: False
+  verbose: INFO

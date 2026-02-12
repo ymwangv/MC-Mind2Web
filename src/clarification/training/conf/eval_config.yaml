@@ -1,0 +1,32 @@
+defaults:
+  - _self_
+  - model: llava-1.6-mistral-7b
+
+data_path: "data"
+splits:
+  - task
+  - website
+  - domain
+
+mode: "proact"
+env: "screenshot"
+
+model_path: null
+use_tuned: true
+
+use_4bit: true
+use_lora: true
+
+eval:
+  max_new_tokens: 512
+  temperature: null
+  top_p: null
+  do_sample: false
+
+
+hydra:
+  run:
+    dir: eval/clarification/${mode}_${env}/${model.name}/${use_tuned}
+  job:
+    chdir: False
+  verbose: INFO

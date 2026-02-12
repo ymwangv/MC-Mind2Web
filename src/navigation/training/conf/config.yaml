@@ -1,0 +1,37 @@
+defaults:
+  - _self_
+  - model: flan-t5-base
+
+task_mode: full
+model_mode: "multichoice"
+
+train:
+  neg_ratio: 0.2
+  num_candidates: 5
+  max_context_len: 512
+  per_device_train_batch_size: 16
+  per_device_eval_batch_size: 32
+  learning_rate: 5e-5
+  epoch: 5
+  bf16: True
+  tf32: True
+  lora: False
+  qlora: False
+  optim: adamw_torch
+  gradient_accumulation_steps: 1
+
+data:
+  base_path: data
+  train_split: train
+  test_splits:
+    - test_task
+    - test_website
+    - test_domain
+  score_file: eval/candidate/${task_mode}/scores_all.pkl
+
+hydra:
+  run:
+    dir: logs/navigation/${task_mode}-${model_mode}/${model.name}/${now:%Y-%m-%d_%H-%M-%S}
+  job:
+    chdir: False
+  verbose: INFO

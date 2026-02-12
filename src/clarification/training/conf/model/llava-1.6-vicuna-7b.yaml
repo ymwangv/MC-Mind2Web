@@ -1,0 +1,8 @@
+name: llava-1.6-vicuna-7b
+model_name_or_path: "llava-hf/llava-v1.6-vicuna-7b-hf"
+
+max_length:
+  env_only_screenshot: 4096
+  env_only_both: 8192
+  proact_screenshot: 4096
+  proact_both: 8192
